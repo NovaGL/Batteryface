@@ -1,0 +1,62 @@
+{
+    "appKeys": {},
+    "capabilities": [
+        ""
+    ],
+    "companyName": "Pebble",
+    "longName": "Batteryface",
+    "projectType": "native",
+    "resources": {
+        "media": [
+            {
+                "file": "images/screen.png",
+                "menuIcon": true,
+                "name": "IMAGE_SCREEN",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/bt_1.png",
+                "name": "IMAGE_BT_1",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/bt_0.png",
+                "name": "IMAGE_BT_0",
+                "targetPlatforms": null,
+                "type": "png"
+            },
+            {
+                "file": "images/background.png",
+                "name": "IMAGE_BACKGROUND",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "fonts/Prototype.ttf",
+                "name": "FONT_PERFECT_DOS_46",
+                "targetPlatforms": null,
+                "type": "font"
+            },
+            {
+                "file": "fonts/Prototype.ttf",
+                "name": "FONT_PERFECT_DOS_20",
+                "targetPlatforms": null,
+                "type": "font"
+            }
+        ]
+    },
+    "sdkVersion": "3",
+    "shortName": "Batteryface",
+    "targetPlatforms": [
+        "aplite",
+        "basalt",
+        "chalk"
+    ],
+    "uuid": "fa4e1ac4-17d7-4fa0-abff-592cd2f22abc",
+    "versionLabel": "1.0",
+    "watchapp": {
+        "watchface": true
+    }
+}
