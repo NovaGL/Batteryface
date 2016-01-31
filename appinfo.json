@@ -1,13 +1,22 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "bluetooth-toggle": 1,
+        "dateformat": 0
+    },
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "Pebble",
     "longName": "Batteryface",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/blank.png",
+                "name": "IMAGE_BLANK",
+                "targetPlatforms": null,
+                "type": "png"
+            },
             {
                 "file": "images/screen.png",
                 "menuIcon": true,
@@ -51,11 +60,10 @@
     "shortName": "Batteryface",
     "targetPlatforms": [
         "aplite",
-        "basalt",
-        "chalk"
+        "basalt"
     ],
-    "uuid": "fa4e1ac4-17d7-4fa0-abff-592cd2f22abc",
-    "versionLabel": "1.0",
+    "uuid": "aa4ff1aa-41ae-441c-9b32-ab5237949959",
+    "versionLabel": "1.1",
     "watchapp": {
         "watchface": true
     }
