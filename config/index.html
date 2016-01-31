@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Watch Face Configuration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' type='text/css' href='css/slate.min.css'>
+ <script src='js/slate.min.js'></script>
+  <style>
+  .title {
+    padding: 15px 10px;
+    text-transform: uppercase;
+    font-family: 'PT Sans', sans-serif;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #888888;
+    text-align: center;
+  }
+  </style>
+    <!-- add extra css! -->
+
+    
+  </head>
+  <body>
+
+
+<h1 class='title'>Watch Face Configuration</h1>
+
+    <div class='item-container'>
+      <div class='item-container-content'>
+        <div class='item'>
+          Use this configuration page to choose the settings you would like applied to this watch face.
+        </div>
+      </div>
+    </div>
+<form role="form" onsubmit="complete()" action="javascript:void(0);">
+<div class="item-container">
+  <div class="item-container-header">Date Format</div>
+  <div class="item-container-content">
+    <label class="item">
+      Select your date format
+      <select name="dateformat" dir='rtl' class="item-select">
+        <option class="item-select-option" value="edate" selected>Euro Date</option>
+        <option class="item-select-option" value="sdate">US Date</option>
+      </select>
+    </label>
+  </div>
+</div>     
+<div class='item-container-footer'>
+       Euro Date for Day first, US Date for Month first </div>
+    </div>
+
+<div class="item-container">
+  <div class="button-container">
+    <input type="submit" class="item-button" value="SEND">
+  </div>
+</div>
+                
+                             </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+  
+function complete() {
+    var o = {};
+    $.each($('form').serializeArray(), function() {
+        o[this.name] = this.value;
+    });
+    window.location.href="pebblejs://close#" + JSON.stringify(o);
+    return false
+  }
+
+</script>
+
+
+    <script src="http://code.jquery.com/jquery.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
+    <script src="http://sinatra-heroku-boilerplate.s3.amazonaws.com/public/vendor/retina.js"></script>
+    
+    
+
+    
+  </body>
+</html>
