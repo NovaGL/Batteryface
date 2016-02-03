@@ -74,6 +74,22 @@
 </div>
 
 <div class="item-container">
+  <div class="item-container-content">
+    <label class="item">
+      Vibrate on Bluetooth Disconnect
+      <input type="checkbox" class="item-toggle" name="vibe_on_disconnect">
+    </label>
+<label class="item">
+      Vibrate on Bluetooth Reconnect
+      <input type="checkbox" class="item-toggle" name="vibe_on_connect">
+    </label>
+  </div>
+  <div class="item-container-footer">
+    When enabled Pebble will vibrate when connected or disconnected from phone
+  </div>
+</div>
+
+<div class="item-container">
   <div class="button-container">
     <input type="submit" class="item-button" value="SEND">
   </div>
@@ -96,8 +112,14 @@ function complete() {
   }
 
 </script>
+
+
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
     <script src="http://sinatra-heroku-boilerplate.s3.amazonaws.com/public/vendor/retina.js"></script>
+    
+    
+
+    
   </body>
 </html>
