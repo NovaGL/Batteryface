@@ -45,18 +45,14 @@
   </div>
 </div>     
 <div class='item-container-footer'>
-       Euro Date for Day first, US Date for Month first </div>
-    </div>
-
-
+       Euro Date for Day first, US Date for Month first
+</div>
 <div class="item-container" style="display: none;">
   <div class="item-container-header">Input Field</div>
   <div class="item-container-content">
-    <label class="item">
       <div class="item-input-wrapper">
-        <input type="text" class="item-input" id="hidden" input type="hidden" name="dateformat" value="edate">
+        <input type="text" class="item-input" id="hidden" name="dateformat" value="edate">
       </div>
-    </label>
   </div>
 </div>
 
@@ -95,31 +91,20 @@
   </div>
 </div>
                 
-                             </form>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
+
 <script>
-  
-function complete() {
-    var o = {};
-    $.each($('form').serializeArray(), function() {
-        o[this.name] = this.value;
-    });
-    window.location.href="pebblejs://close#" + JSON.stringify(o);
-    return false
-  }
-
+  function complete() {
+      var o = {};
+      $.each($('form').serializeArray(), function() {
+          o[this.name] = this.value;
+      });
+      window.location.href="pebblejs://close#" + JSON.stringify(o);
+      return false
+    }
 </script>
-
-
     <script src="http://code.jquery.com/jquery.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>
     <script src="http://sinatra-heroku-boilerplate.s3.amazonaws.com/public/vendor/retina.js"></script>
-    
-    
-
-    
   </body>
 </html>
