@@ -3,8 +3,12 @@
 #define KEY_BT_FORMAT 1
 #define KEY_VIBE_ON_DISCONNECT 2
 #define KEY_VIBE_ON_CONNECT 3
+#define KEY_COLOR_RED     4
+#define KEY_COLOR_GREEN   5
+#define KEY_COLOR_BLUE    6
 #define LOW_POWER 50
 
+GColor time_color;
 
 static Window *s_main_window;
 static TextLayer *s_time_layer, *s_date_layer;
@@ -23,13 +27,14 @@ static bool vibe_on_disconnect = 0;
 static bool vibe_on_connect = 0;
 
 
-// Grab settings
+/* Grab settings
 enum {
   CONFIG_dateformat = 0x0,
   CONFIG_bt = 0x1, 
   CONFIG_bt_disconnect = 0x2,
   CONFIG_bt_connect = 0x3
 };
+*/
 
 // Record Bluetooth connection state
 static void bluetooth_callback(bool connected) {
@@ -58,9 +63,6 @@ static void bluetooth_callback(bool connected) {
 	}
   
 }
-
-
-
 ////////////////// Time and Date Status//////////////////////
 static void update_time() {
   time_t temp = time(NULL); 
@@ -142,6 +144,7 @@ static void main_window_load(Window *window) {
   window = window_create();
   window_stack_push(window, true);
 	window_set_background_color(window, GColorBlack);
+  time_color = GColorFromRGB(0, 170, 255);
   
 	Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
@@ -152,11 +155,20 @@ static void main_window_load(Window *window) {
   s_date_font = fonts_load_custom_font(resource_get_handle(RESOURCE_ID_FONT_PERFECT_DOS_20));
    
     
-  // Create TIME TextLayer
+  // Create TIME TextLayer and set colour
   s_time_layer = text_layer_create(GRect(0, 40, bounds.size.w, bounds.size.h));
-  //s_time_layer = text_layer_create(GRect(5, 40, 139, 50));
   text_layer_set_background_color(s_time_layer, GColorClear);
-  text_layer_set_text_color(s_time_layer, GColorVividCerulean);
+  // Read saved config
+  #if defined(PBL_BW)
+    text_layer_set_text_color(s_time_layer, GColorWhite);
+  #elif defined(PBL_COLOR)
+    // Use background color setting
+    int red = persist_read_int(KEY_COLOR_RED);
+    int green = persist_read_int(KEY_COLOR_GREEN);
+    int blue = persist_read_int(KEY_COLOR_BLUE);
+    time_color = GColorFromRGB(red, green, blue);    
+    text_layer_set_text_color(s_time_layer, time_color);
+  #endif
   text_layer_set_text(s_time_layer, "00:00");
   text_layer_set_font(s_time_layer, s_time_font);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
@@ -235,12 +247,37 @@ void in_received_handler(DictionaryIterator *received, void *context) {
   vibe_on_disconnect = 0;
   
   // incoming message received
-  Tuple *date_tuple = dict_find(received, CONFIG_dateformat);
-  Tuple *bt_tuple = dict_find(received, CONFIG_bt);
-  Tuple *vibe_on_connect_t = dict_find(received, CONFIG_bt_connect); // int8
-  Tuple *vibe_on_disconnect_t = dict_find(received, CONFIG_bt_disconnect); // int8
-    
+  Tuple *date_tuple = dict_find(received, KEY_DATE_FORMAT);
+  Tuple *bt_tuple = dict_find(received, KEY_BT_FORMAT);
+  Tuple *vibe_on_connect_t = dict_find(received, KEY_VIBE_ON_CONNECT); // int8
+  Tuple *vibe_on_disconnect_t = dict_find(received, KEY_VIBE_ON_DISCONNECT); // int8
   
+  
+  ////// Colour Scheme
+    Tuple *color_red_t = dict_find(received, KEY_COLOR_RED);
+    Tuple *color_green_t = dict_find(received, KEY_COLOR_GREEN);
+    Tuple *color_blue_t = dict_find(received, KEY_COLOR_BLUE);
+  
+    if(color_red_t && color_green_t && color_blue_t) {
+    // Apply the color if available
+    #if defined(PBL_BW)
+      text_layer_set_text_color(s_time_layer, GColorWhite);
+    #elif defined(PBL_COLOR)
+      int red = color_red_t->value->int32;
+      int green = color_green_t->value->int32;
+      int blue = color_blue_t->value->int32;
+
+    // Persist values
+      persist_write_int(KEY_COLOR_RED, red);
+      persist_write_int(KEY_COLOR_GREEN, green);
+      persist_write_int(KEY_COLOR_BLUE, blue);
+
+       time_color = GColorFromRGB(red, green, blue);      
+      text_layer_set_text_color(s_time_layer, time_color);
+    #endif
+  }
+  
+  // Set date format either MM DD or DD MM
    if (date_tuple) {
   	APP_LOG(APP_LOG_LEVEL_INFO, "KEY_DATE_FORMAT received!");
 
@@ -255,6 +292,7 @@ void in_received_handler(DictionaryIterator *received, void *context) {
   	}     
    }
   
+  // Set if BT Symbol is shown when phone is connected
   if (bt_tuple){
       if (strcmp(bt_tuple->value->cstring, "on") == 0) {        
         bt_toggle = 1;
@@ -266,14 +304,17 @@ void in_received_handler(DictionaryIterator *received, void *context) {
       }
     }  
   
+  // Vibration settings
    if (vibe_on_connect_t) {
   	APP_LOG(APP_LOG_LEVEL_INFO, "KEY_VIBE_ON_CONNECT received!");
   	vibe_on_connect = vibe_on_connect_t->value->int8;
+    persist_write_int(KEY_VIBE_ON_CONNECT, vibe_on_connect);
   }
 
   if (vibe_on_disconnect_t) {
   	APP_LOG(APP_LOG_LEVEL_INFO, "KEY_VIBE_ON_DISCONNECT received!");
   	vibe_on_disconnect = vibe_on_disconnect_t->value->int8;
+    persist_write_int(KEY_VIBE_ON_DISCONNECT, vibe_on_disconnect);
   }
   
   update_time();
