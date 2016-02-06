@@ -1,13 +1,28 @@
 {
-    "appKeys": {},
+    "appKeys": {
+        "KEY_BT_FORMAT": 1,
+        "KEY_COLOR_BLUE": 6,
+        "KEY_COLOR_GREEN": 5,
+        "KEY_COLOR_RED": 4,
+        "KEY_DATE_FORMAT": 0,
+        "KEY_VIBE_ON_CONNECT": 3,
+        "KEY_VIBE_ON_DISCONNECT": 2
+    },
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "Pebble",
+    "enableMultiJS": false,
     "longName": "Batteryface",
     "projectType": "native",
     "resources": {
         "media": [
+            {
+                "file": "images/blank.png",
+                "name": "IMAGE_BLANK",
+                "targetPlatforms": null,
+                "type": "png-trans"
+            },
             {
                 "file": "images/screen.png",
                 "menuIcon": true,
@@ -28,20 +43,14 @@
                 "type": "png"
             },
             {
-                "file": "images/background.png",
-                "name": "IMAGE_BACKGROUND",
-                "targetPlatforms": null,
-                "type": "bitmap"
-            },
-            {
                 "file": "fonts/Prototype.ttf",
-                "name": "FONT_PERFECT_DOS_46",
+                "name": "FONT_PERFECT_DOS_20",
                 "targetPlatforms": null,
                 "type": "font"
             },
             {
                 "file": "fonts/Prototype.ttf",
-                "name": "FONT_PERFECT_DOS_20",
+                "name": "FONT_PERFECT_DOS_46",
                 "targetPlatforms": null,
                 "type": "font"
             }
@@ -54,8 +63,8 @@
         "basalt",
         "chalk"
     ],
-    "uuid": "fa4e1ac4-17d7-4fa0-abff-592cd2f22abc",
-    "versionLabel": "1.0",
+    "uuid": "aa4ff1aa-41ae-441c-9b32-ab5237949959",
+    "versionLabel": "1.5",
     "watchapp": {
         "watchface": true
     }
